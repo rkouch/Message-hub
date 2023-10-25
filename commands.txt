@@ -1,0 +1,16 @@
+// start up docker container
+docker compose up -d
+
+// shut down docker container
+docker compose down
+
+// shut down docker container - remove docker volumes
+docker compose down -v
+
+// list docker containers
+docker compose ps
+
+// connect to db through terminal
+docker exec -it postgres bash
+    psql -U messagehub
+
