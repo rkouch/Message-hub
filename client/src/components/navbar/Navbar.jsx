@@ -1,14 +1,23 @@
 import { Link, useMatch, useResolvedPath, useRouteError } from "react-router-dom";
+import RoundButton from "../neon-button/RoundButton";
+import './Navbar.css';
+import LogInModal from "./LogInModal";
+import RegisterModal from "./ResisterModal";
 
 export default function Navbar() {
-    const path = window.location.pathname;
     return <nav className="nav">
         <Link to="/" className="site-title">
-            Message Hub
+            Messagehub
         </Link>
         <ul>
-            <CustomLink to="/register">Register</CustomLink>
-            <CustomLink to="/login">Login</CustomLink>
+            <li>
+            <LogInModal></LogInModal>
+            </li>
+            <li>
+            <RegisterModal></RegisterModal>
+            </li>
+            {/* <CustomLink to="/register">Register</CustomLink>
+            <CustomLink to="/login">Login</CustomLink> */}
         </ul>
     </nav>
 }
