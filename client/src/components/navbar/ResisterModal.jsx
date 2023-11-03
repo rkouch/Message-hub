@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import RoundButton from '../neon-button/RoundButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';

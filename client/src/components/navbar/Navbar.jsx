@@ -6,6 +6,7 @@ import RegisterModal from "./ResisterModal";
 
 export default function Navbar() {
     return <nav className="nav">
+        
         <Link to="/" className="site-title">
             Messagehub
         </Link>
@@ -16,8 +17,6 @@ export default function Navbar() {
             <li>
             <RegisterModal></RegisterModal>
             </li>
-            {/* <CustomLink to="/register">Register</CustomLink>
-            <CustomLink to="/login">Login</CustomLink> */}
         </ul>
     </nav>
 }

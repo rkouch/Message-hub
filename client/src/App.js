@@ -5,13 +5,14 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import { Route, Routes } from 'react-router-dom';
+import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
 
   return (
     <>
     
-      <Navbar />
+      <Sidebar></Sidebar>
       <div className="container">
         <Routes>
           <Route path="/" element={<Home></Home>}></Route>
