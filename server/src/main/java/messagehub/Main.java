@@ -1,8 +1,8 @@
 package messagehub;
 
 import lombok.RequiredArgsConstructor;
-import messagehub.user.User;
-import messagehub.user.UsersRepository;
+import messagehub.entities.user.User;
+import messagehub.entities.user.UsersRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

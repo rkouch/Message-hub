@@ -1,10 +1,7 @@
-package messagehub.auth;
+package messagehub.controllers.auth;
 
 import messagehub.exceptions.BadRequestException;
-import messagehub.exceptions.ServerException;
 import lombok.RequiredArgsConstructor;
-import messagehub.exceptions.UnauthorizedRequestException;
-import messagehub.registration.RegistrationDetailsRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

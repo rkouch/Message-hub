@@ -1,4 +1,4 @@
-package messagehub.registration;
+package messagehub.controllers.auth;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegistrationDetailsRequest {
-    private String name;
-    private String email;
-    private String password;
+    public String name;
+    public String email;
+    public String password;
 }

@@ -1,4 +1,4 @@
-package messagehub.user;
+package messagehub.entities.user;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

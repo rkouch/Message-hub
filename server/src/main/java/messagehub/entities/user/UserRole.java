@@ -1,4 +1,4 @@
-package messagehub.user;
+package messagehub.entities.user;
 
 public enum UserRole {
     USER,
