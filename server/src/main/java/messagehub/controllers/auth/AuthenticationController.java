@@ -20,6 +20,11 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authenticationService.login(request));
+    }
+
     @GetMapping("/error")
     public ResponseEntity<String> register(@RequestParam("id") int i) {
         if (i == 100) {

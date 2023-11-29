@@ -1,5 +1,8 @@
 package messagehub.controllers.auth;
 
+import messagehub.entities.token.Token;
+import messagehub.entities.token.TokenRepository;
+import messagehub.entities.token.TokenType;
 import messagehub.exceptions.BadRequestException;
 import messagehub.exceptions.ForbiddenException;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +16,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.regex.Pattern;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UsersRepository usersRepository;
+    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -42,10 +46,20 @@ public class AuthenticationService {
         } catch (Exception e) {
             throw new BadRequestException("Email already in use");
         }
-
-
         String jwtToken = jwtService.generateToken(user);
+        saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
+    }
+
+    public LoginResponse login(LoginRequest request) {
+        User user = usersRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new ForbiddenException(String.format("Unknown account \"%s\"", request.email)));
+        String jwtToken = jwtService.generateToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwtToken);
+        return LoginResponse.builder()
                 .token(jwtToken)
                 .build();
     }
@@ -60,8 +74,35 @@ public class AuthenticationService {
         }
         User user = usersRepository.findByEmail(request.getEmail()).orElseThrow();
         String jwtToken = jwtService.generateToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
+
+    private void saveUserToken(User user, String jwtToken) {
+        Token token = Token.builder()
+                .user(user)
+                .tokenType(TokenType.BEARER)
+                .expired(false)
+                .revoked(false)
+                .token(jwtToken)
+                .build();
+        tokenRepository.save(token);
+    }
+
+    private void revokeAllUserTokens(User user) {
+        List<Token> userTokens = tokenRepository.findAllValidTokensByUser(user.getId());
+        if (userTokens.isEmpty()) {
+            return;
+        }
+        userTokens.forEach(t -> {
+            t.setExpired(true);
+            t.setRevoked(true);
+        });
+        tokenRepository.saveAll(userTokens);
+    }
+
+
 }

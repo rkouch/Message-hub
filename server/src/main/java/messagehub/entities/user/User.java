@@ -2,20 +2,18 @@ package messagehub.entities.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import messagehub.entities.token.Token;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.UUID;
+import java.util.*;
 
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "_user")
 public class User implements UserDetails {
     @Id
@@ -30,6 +28,9 @@ public class User implements UserDetails {
     private UserRole userRole;
     private boolean locked;
     private boolean enabled;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
