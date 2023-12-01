@@ -1,21 +1,19 @@
 .round-button {
     display: inline-block;
-    padding: .75rem 1.25rem;
-    border-radius: 10rem;
-    color: #444242;
-    /* text-transform: uppercase; */
-    font-size: 1rem;
-    letter-spacing: .15rem;
+    padding: .5rem 1.25rem;
+    margin: .5rem;
+    border-radius: .5rem;
+    color: black;
+    font-size: 1.7rem;
+    letter-spacing: 0.15rem;
     transition: all .3s;
     position: relative;
     overflow: hidden;
     z-index: 1;
-    font-family: Arial;
     text-decoration: none;
-    font-size: 20px;
     cursor:pointer;
 }
-.round-button:after {
+/* .round-button:after {
     position: absolute;
     content: " ";
     top: 0;
@@ -23,12 +21,12 @@
     z-index: -1;
     width: 100%;
     height: 100%;
-    background: #444242;
+    background: #50e0ff;
     transition: all 0.3s ease;
     -webkit-transform: scale(0);
     transform: scale(0);
-}
-.round-button:before {
+} */
+/* .round-button:before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -39,12 +37,24 @@
     transition: all .3s;
     border-radius: 10rem;
     z-index: -1;
-}
+} */
 .round-button:hover {
-    color: #fff;
+    color: white;
+    background-color: var(--background-colour);
 }
-.round-button:hover:after {
+/* .round-button:hover:after {
 -webkit-transform: scale(1);
 transform: scale(1);
+} */
+
+@media screen and (max-width: 600px) {
+    .round-button {
+        font-size: 1rem;
+    }
 }
 
+@media screen and (max-width: 420px) {
+    .round-button {
+        font-size: 0.8rem;
+    }
+}

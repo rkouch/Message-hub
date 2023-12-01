@@ -1,5 +1,5 @@
 import { Link, useMatch, useResolvedPath, useRouteError } from "react-router-dom";
-import RoundButton from "../neon-button/RoundButton";
+import RoundButton from "../round-button/RoundButton";
 import './Navbar.css';
 import LogInModal from "./LogInModal";
 import RegisterModal from "./ResisterModal";

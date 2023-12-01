@@ -1,5 +1,26 @@
+@font-face {
+  font-family: 'Handmade';
+  src: url(./resources/Handmade.otf);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Handmade";
+}
+
+body {
+  margin: 0
+}
+
+.main-container {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 2rem 4rem rgba(0,0,0,0.6);
+  border: 1px solid black;
+  display: grid;
+  grid-template-rows: 5rem 1fr;
+  grid-template-columns: 20rem 1fr;
 }
