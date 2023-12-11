@@ -2,6 +2,7 @@ import React from 'react';
 import "./Register.css";
 import { fetchApi } from '../../util/Helpers';
 import { EMAIL_REGEX, PASS_REGEX } from '../../util/AppConstants';
+import { setAccessToken } from '../../accessToken';
 
 export default function Register() {
     const [email, setEmail] = React.useState('');
@@ -52,7 +53,9 @@ export default function Register() {
                 setError(result.errorReason);
             } else {
                 setError("");
+                setAccessToken(result.accessToken);
             }
+            console.log(result);
         } catch (e) {
             console.log('Error:', e);
         }

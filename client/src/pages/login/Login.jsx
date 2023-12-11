@@ -1,3 +1,4 @@
+import { accessToken, getAccessToken, setAccessToken } from "../../accessToken";
 import { fetchApi } from "../../util/Helpers";
 import "./Login.css";
 import React from 'react';
@@ -20,7 +21,7 @@ export default function Login() {
                 setError("Incorect email or password!");
             } else {
                 setError('');
-                console.log(error);
+                setAccessToken(result.accessToken);
             }
             console.log(result);
         } catch (error) {
