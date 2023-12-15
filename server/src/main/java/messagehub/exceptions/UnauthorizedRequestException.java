@@ -1,6 +1,6 @@
 package messagehub.exceptions;
 
-public class UnauthorizedRequestException extends ServerException{
+public class UnauthorizedRequestException extends ServerException {
     public UnauthorizedRequestException(String reason) {
         super(401, "Unauthorized", reason);
     }

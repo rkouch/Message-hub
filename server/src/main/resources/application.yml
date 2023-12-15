@@ -23,3 +23,11 @@ logging:
   level:
     org:
       springframework: ERROR
+
+application:
+  security:
+    jwt:
+      secret-key: 3f6e7dd68dd5f6ba67c894e9797b1ab219b74a4e653d6a6880f37d9c27b6f0fd
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000

@@ -1,0 +1,10 @@
+.dot-dot {
+    font-size: 10rem;
+    grid-column: 1 / -1;
+    grid-row: 2 / 2;
+    background-color: var(--background-colour);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

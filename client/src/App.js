@@ -1,25 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
-import Navbar from './components/navbar/Navbar';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import Home from './pages/Home';
+import Register from './pages/register/Register';
+import Login from './pages/login/Login';
+import Home from './pages/home/Home';
 import { Route, Routes } from 'react-router-dom';
-import Sidebar from "./components/sidebar/Sidebar";
+import Header from "./components/header/Header";
+import DotDot from './components/fallback/DotDot';
+import React from 'react';
+import { AuthProvider } from './AuthProvider';
 
 function App() {
-
   return (
-    <>
-    
-      <Sidebar></Sidebar>
-      <div className="container">
-        <Routes>
-          <Route path="/" element={<Home></Home>}></Route>
-          <Route path="/register" element={<Register></Register>}></Route>
-          <Route path="/login" element={<Login></Login>}></Route>
-        </Routes>
+      <>
+      <div className="main-container">
+        <AuthProvider>
+          <Header></Header>
+          <Routes>
+            <Route path="/" element={<Home></Home>}></Route>
+            <Route path="/register" element={<Register></Register>}></Route>
+            <Route path="/login" element={<Login></Login>}></Route>
+          </Routes>
+        </AuthProvider>
       </div>
+      
     </>
   )
 }

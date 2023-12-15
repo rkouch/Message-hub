@@ -1,5 +1,5 @@
 import React from 'react';
-import RoundButton from '../neon-button/RoundButton';
+import RoundButton from '../round-button/RoundButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
