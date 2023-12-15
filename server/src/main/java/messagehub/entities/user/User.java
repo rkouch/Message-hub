@@ -13,7 +13,8 @@ import java.util.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "_user")
 public class User implements UserDetails {
     @Id
@@ -31,6 +32,10 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    public void addToken(Token token) {
+        tokens.add(token);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -3,12 +3,14 @@ import "./Register.css";
 import { fetchApi } from '../../util/Helpers';
 import { EMAIL_REGEX, PASS_REGEX } from '../../util/AppConstants';
 import { setAccessToken } from '../../accessToken';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
     const [email, setEmail] = React.useState('');
     const [pw, setPw] = React.useState('');
     const [confirmPw, setconfirmPw] = React.useState('');
     const [error, setError] = React.useState('');
+    const navigate = useNavigate();
 
     const body = {
         email: email,
@@ -54,6 +56,8 @@ export default function Register() {
             } else {
                 setError("");
                 setAccessToken(result.accessToken);
+                navigate("/");
+                window.location.reload()
             }
             console.log(result);
         } catch (e) {

@@ -19,14 +19,11 @@ import messagehub.util.AppConstants;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +50,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .email(request.getEmail())
                 .userRole(UserRole.USER)
+                .tokens(new ArrayList<>())
                 .build();
         try {
             usersRepository.save(user);
@@ -107,6 +105,8 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .build();
         tokenRepository.save(token);
+        user.addToken(token);
+        usersRepository.save(user);
     }
 
     private void revokeAllUserTokens(User user) {
@@ -126,14 +126,14 @@ public class AuthenticationService {
         final String refreshToken;
         final String email;
 
-        Cookie refreshCookie = findCookieByName(request.getCookies(), "refreshToken").orElse(null);
+        Cookie refreshCookie = findCookieByName(request.getCookies(), AppConstants.REFRESH_COOKIE_NAME).orElse(null);
         if (refreshCookie == null) {
             return;
         }
         refreshToken = refreshCookie.getValue();
         email = jwtService.extractUsername(refreshToken);
         if (email != null) {
-            User userDetails = this.usersRepository.findByEmail(email).orElseThrow();
+            User userDetails = this.usersRepository.findByEmail(email).orElseThrow(() -> new ForbiddenException("Email cannot be found"));
             if (jwtService.isTokenValid(refreshToken, userDetails)) {
                 String accessToken = jwtService.generateToken(userDetails);
                 revokeAllUserTokens(userDetails);
@@ -148,22 +148,22 @@ public class AuthenticationService {
 
     public HttpHeaders generateCookieHeaders(LoginRequest request) {
         User user = usersRepository.findByEmail(request.getEmail()).orElseThrow();
-        return getHttpHeaders(user);
+        return getCookieHeaders(user);
     }
 
     public HttpHeaders generateCookieHeaders(RegistrationDetailsRequest request) {
         User user = usersRepository.findByEmail(request.getEmail()).orElseThrow();
-        return getHttpHeaders(user);
+        return getCookieHeaders(user);
     }
 
     public HttpHeaders generateCookieHeaders(AuthenticationRequest request) {
         User user = usersRepository.findByEmail(request.getEmail()).orElseThrow();
-        return getHttpHeaders(user);
+        return getCookieHeaders(user);
     }
 
-    private HttpHeaders getHttpHeaders(User user) {
+    private HttpHeaders getCookieHeaders(User user) {
         String refreshToken = jwtService.generateRefreshToken(user);
-        String cookie = "refreshToken=" + refreshToken
+        String cookie = AppConstants.REFRESH_COOKIE_NAME + "=" + refreshToken
                 + "; HttpOnly; Secure; Path=/api/v1/auth/refresh-token; Max-Age=" + (60 * 60 * 24 * 7);
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.SET_COOKIE, cookie);

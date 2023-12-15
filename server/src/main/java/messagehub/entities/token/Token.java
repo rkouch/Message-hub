@@ -1,10 +1,7 @@
 package messagehub.entities.token;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import messagehub.entities.user.User;
 
 import java.util.UUID;
@@ -13,7 +10,8 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -1,10 +1,13 @@
 package messagehub.security.config;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import messagehub.entities.token.Token;
 import messagehub.entities.token.TokenRepository;
+import messagehub.util.AppConstants;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
@@ -27,5 +30,12 @@ public class LogoutService implements LogoutHandler {
             storedToken.setExpired(true);
             tokenRepository.save(storedToken);
         }
+
+        Cookie cookie = new Cookie(AppConstants.REFRESH_COOKIE_NAME, null);
+        cookie.setPath("/api/v1/auth/refresh-token");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 }
